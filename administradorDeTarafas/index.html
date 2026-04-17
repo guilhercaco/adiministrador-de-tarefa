@@ -27,14 +27,14 @@
         <p>&copy;2026 SENAI. Todos os direitos reservados</p>
     </footer>
     <script>
-        let taresfas = {};
+        let tarefas = [];
         function adicionartarefa(){
             const input= document.getElementById("tarefaInput");
             const tarefa = input.value.trim();//remove espaço descessarios
             if(tarefa){
                 tarefas.push(tarefa);
                 input.value ="";
-                atualizarLista();//funcao para ainda vamos criar
+                atualizarlista();//funcao para ainda vamos criar
             }
             
         }
@@ -45,9 +45,9 @@
         function atualizarlista(){
             const lista = document.getElementById("listaTarefas");
             lista.innerHTML = '';
-            tarefas,forEach((tarefa,index) => {
-                const li = dovument.creteElement("li");
-                li.innerHTML = `${tarefa} <button onclick="removerTarefa(${index}")>remover</button>`;
+            tarefas.forEach((tarefa,index) => {
+                const li = document.createElement("li");
+                li.innerHTML = `${tarefa} <button onclick="removerTarefa(${index})">remover</button>`;
                 lista.appendChild(li);
             })}
     </script>
