@@ -19,7 +19,7 @@
         <h2>Adicionar nova tarefa</h2>
         <div>
             <input type="text" placeholder="Digite uma tarefa" id="tarefaInput">
-            <button onclick="">Adicionar</button>
+            <button onclick="adicionartarefa()">Adicionar</button>
         </div>
         <ul id="listaTarefas"></ul>
     </div>
@@ -27,7 +27,29 @@
         <p>&copy;2026 SENAI. Todos os direitos reservados</p>
     </footer>
     <script>
-        
+        let taresfas = {};
+        function adicionartarefa(){
+            const input= document.getElementById("tarefaInput");
+            const tarefa = input.value.trim();//remove espaço descessarios
+            if(tarefa){
+                tarefas.push(tarefa);
+                input.value ="";
+                atualizarLista();//funcao para ainda vamos criar
+            }
+            
+        }
+        function removerTarefa(index){
+            tarefas.splice(index,1);
+            atualizarlista();
+        }
+        function atualizarlista(){
+            const lista = document.getElementById("listaTarefas");
+            lista.innerHTML = '';
+            tarefas,forEach((tarefa,index) => {
+                const li = dovument.creteElement("li");
+                li.innerHTML = `${tarefa} <button onclick="removerTarefa(${index}")>remover</button>`;
+                lista.appendChild(li);
+            })}
     </script>
 </body>
 </html>
