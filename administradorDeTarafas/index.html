@@ -1,55 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>lista de Taredas</h1>
-        <nav>
-            <!---links de navegacao corrigidos com as ancoras-->
-            <a href="">inicio</a>
-            <a href="">Tarefas</a>
-            <a href="">contato</a>
-        </nav>
+      <h1>lista de Taredas</h1>
+      <nav>
+        <!---links de navegacao corrigidos com as ancoras-->
+        <a href="#inicio">inicio</a>
+        <a href="#listaTaresfas">Tarefas</a>
+        <a href="#contato">contato</a>
+      </nav>
     </header>
-    <div id="inicio"class="container">
-        <h2>Adicionar nova tarefa</h2>
-        <div>
-            <input type="text" placeholder="Digite uma tarefa" id="tarefaInput">
-            <button onclick="adicionartarefa()">Adicionar</button>
-        </div>
-        <ul id="listaTarefas"></ul>
+    <div id="inicio" class="container">
+      <h2>Adicionar nova tarefa</h2>
+      <div>
+        <input type="text" placeholder="Digite uma tarefa" id="tarefaInput" />
+        <button onclick="adicionartarefa()">Adicionar</button>
+      </div>
+      <ul id="listaTarefas"></ul>
     </div>
     <footer id="Contato">
-        <p>&copy;2026 SENAI. Todos os direitos reservados</p>
+      <p>&copy;2026 SENAI. Todos os direitos reservados</p>
     </footer>
     <script>
-        let tarefas = [];
-        function adicionartarefa(){
-            const input= document.getElementById("tarefaInput");
-            const tarefa = input.value.trim();//remove espaço descessarios
+      let tarefas = [];
+        let editandoIndex=null;
+
+      function adicionartarefa() {
+        const input = document.getElementById("tarefaInput");
+        const tarefa = input.value.trim(); //remove espaço descessarios
+        if (tarefa) {
+          tarefas.push(tarefa);
+          input.value = "";
+          atualizarlista(); //funcao para ainda vamos criar
+        }
+      }
+      function removerTarefa(index) {
+        tarefas.splice(index, 1);
+        atualizarlista();
+      }
+        function adicionarTarefa(){
+            const input = document.getElementById('tarefaInput');
+            const tarefa = input.value.trim(); // remove espaço desnecessários
             if(tarefa){
-                tarefas.push(tarefa);
-                input.value ="";
-                atualizarlista();//funcao para ainda vamos criar
+                if(editandoIndex === null){
+                   tarefas.push(tarefa); // cria uma tarefa se não estiver editando
+                }else{
+                    tarefas[editandoIndex] = tarefa; // edita uma tarefa se já estiver criada
+                    editandoIndex = null;
+                }
+                input.value = '';
+                atualizarLista(); // função que ainda vamos criar  
             }
-            
         }
-        function removerTarefa(index){
-            tarefas.splice(index,1);
-            atualizarlista();
+        function editarTarefa(index){
+            const input = document.getElementById('tarefaInput');
+            input.value = tarefas[index];
+            editandoIndex = index;
         }
-        function atualizarlista(){
-            const lista = document.getElementById("listaTarefas");
-            lista.innerHTML = '';
-            tarefas.forEach((tarefa,index) => {
-                const li = document.createElement("li");
-                li.innerHTML = `${tarefa} <button onclick="removerTarefa(${index})">remover</button>`;
-                lista.appendChild(li);
-            })}
+      function atualizarlista() {
+        const lista = document.getElementById("listaTarefas");
+        lista.innerHTML = "";
+        tarefas.forEach((tarefa, index) => {
+          const li = document.createElement("li");
+          li.innerHTML = `${tarefa} 
+          <button onclick="editarTarefa(${index})">editar</button>
+          <button onclick="removerTarefa(${index})">remover</button>`;
+          lista.appendChild(li);
+        });
+      }
+     
     </script>
-</body>
+  </body>
 </html>
